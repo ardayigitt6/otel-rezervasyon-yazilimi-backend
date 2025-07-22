@@ -14,7 +14,7 @@ const register = (req,res) => {
 const login = (req,res) => {
     const error= userValidation.validateLogin(req.body);
     if (error) return res.status(400).json ({error})
-    userService.login(req.body.email,req.body.password,:(err,user,msg) => {
+    userService.login(req.body.email,req.body.password,(err,user,msg) => {
         if (err) return res.status(500).json ({error:"Veritabanı hatası."});
         if (msg) return res.status(400).json ({error:msg});
         res.json ({message:"Giriş başarılı.",user});
