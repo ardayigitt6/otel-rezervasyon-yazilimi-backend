@@ -1,5 +1,5 @@
 const userService = require('../services/userService');
-const userValidation require('../validations/userValidation');
+const userValidation=require('../validations/userValidation');
 
 const register = (req,res) => {
     const error = userValidation.validatRegister(req.body);
