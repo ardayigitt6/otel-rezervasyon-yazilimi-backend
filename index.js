@@ -13,7 +13,7 @@ app.get('/',(req,res)=>{
 });
 
 app.post('/register',userController.register);
-app.post('login',userController.login);
+app.post('/login',userController.login);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, ()=>{
