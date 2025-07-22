@@ -1,4 +1,3 @@
-const { use } = require('react');
 const userData = require('../data-access/userDataAccess');
 
 const register = (user,callback) => {
@@ -11,6 +10,7 @@ const register = (user,callback) => {
         });
     });
 };
+                                                                                                                                  
 const login = (email,password,callback) => {
     userData.findUserByEmailAndPassword(email,password,(err,result) => {
     if (err) return callback(err);
