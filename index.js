@@ -4,6 +4,8 @@ require('dotenv').config();
 
 const userController = require('./controllers/userController');
 const roomController = require('./controllers/roomController');
+const reservationController = require('./controllers/reservationController');
+const authMiddleware = require('./middlewares/authMiddleware');
 
 const app = express();
 app.use(express.json());
@@ -26,6 +28,12 @@ app.get('/rooms/:id', roomController.getRoomById);
 app.post('/rooms', roomController.createRoom);
 app.put('/rooms/:id', roomController.updateRoom);
 app.delete('/rooms/:id', roomController.deleteRoom);
+
+app.post('/reservations', authMiddleware, reservationController.createReservation);
+app.get('/reservations', authMiddleware, reservationController.getAllReservations);
+app.get('/reservations/:userId', authMiddleware, reservationController.getReservationsByUser);
+app.put('/reservations/:id', authMiddleware, reservationController.updateReservation);
+app.delete('/reservations/:id', authMiddleware, reservationController.deleteReservation);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

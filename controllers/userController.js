@@ -4,20 +4,24 @@ const userValidation = require('../validations/userValidation');
 exports.register = (req, res) => {
     const error = userValidation.validateRegister(req.body);
     if (error) return res.status(400).json({ error });
+
     userService.register(req.body, (err, result, msg) => {
         if (err) return res.status(500).json({ error: "Veritabanı hatası." });
         if (msg) return res.status(400).json({ error: msg });
-        res.json({ message: "Kayıt başarılı!" });
+
+        res.status(201).json({ message: "Kayıt başarılı!" });
     });
 };
 
 exports.login = (req, res) => {
     const error = userValidation.validateLogin(req.body);
     if (error) return res.status(400).json({ error });
-    userService.login(req.body.email, req.body.password, (err, user, msg) => {
+
+    userService.login(req.body.email, req.body.password, (err, token, msg) => {
         if (err) return res.status(500).json({ error: "Veritabanı hatası." });
         if (msg) return res.status(400).json({ error: msg });
-        res.json({ message: "Giriş başarılı.", user });
+
+        res.json({ message: "Giriş başarılı.", token });
     });
 };
 
@@ -68,3 +72,4 @@ exports.deleteUser = async (req, res) => {
         res.status(500).json({ error: 'Kullanıcı silinirken hata oluştu!' });
     }
 };
+

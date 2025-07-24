@@ -1,5 +1,5 @@
 const validateRegister = (body) => {
-    if (!body.name || !body.email || !body.password || !body.role ) {
+    if (!body.name || !body.email || !body.password || !body.role) {
         return "Tüm alanlar zorunludur.";
     }
     return null;
@@ -12,4 +12,4 @@ const validateLogin = (body) => {
     return null;
 };
 
-module.exports = {validateRegister,validateLogin};
+module.exports = { validateRegister, validateLogin };
