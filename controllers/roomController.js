@@ -48,3 +48,23 @@ exports.deleteRoom = async (req, res) => {
         res.status(500).json({ error: 'Oda silinirken hata oluştu.' });
     }
 };
+
+exports.getAvailableRooms = async (req, res) => {
+    const { check_in_date, check_out_date } = req.query;
+
+    if (!check_in_date || !check_out_date) {
+        return res.status(400).json({ error: 'check_in_date ve check_out_date zorunludur.' });
+    }
+
+    try {
+        const [rooms] = await roomService.getAvailableRooms(check_in_date, check_out_date);
+
+        if (rooms.length === 0) {
+            return res.status(404).json({ error: 'Oda bulunmadı!' });
+        }
+
+        res.json(rooms);
+    } catch (err) {
+        res.status(500).json({ error: 'Müsait odalar alınamadı.', details: err.message });
+    }
+};

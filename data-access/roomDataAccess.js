@@ -54,3 +54,15 @@ exports.deleteRoom = (id) => {
             });
     });
 };
+
+exports.getAvailableRooms = (checkInDate, checkOutDate) => {
+    const sql = `
+        SELECT * FROM rooms
+        WHERE status = 'available'
+        AND id NOT IN (
+            SELECT room_id FROM reservations
+            WHERE check_in_date < ? AND check_out_date > ?
+        )
+    `;
+    return db.promise().execute(sql, [checkOutDate, checkInDate]);
+};

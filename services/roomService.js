@@ -5,3 +5,8 @@ exports.getRoomById = (id) => roomDataAccess.getRoomById(id);
 exports.createRoom = (roomData) => roomDataAccess.createRoom(roomData);
 exports.updateRoom = (id, roomData) => roomDataAccess.updateRoom(id, roomData);
 exports.deleteRoom = (id) => roomDataAccess.deleteRoom(id);
+
+exports.getAvailableRooms = async (checkInDate, checkOutDate) => {
+    return await roomDataAccess.getAvailableRooms(checkInDate, checkOutDate);
+};
+
