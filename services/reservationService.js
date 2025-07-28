@@ -1,6 +1,12 @@
 const reservationData = require('../data-access/reservationDataAccess');
 
 exports.createReservation = async (user_id, room_id, check_in_date, check_out_date) => {
+    const [conflicts] = await reservationData.checkReservationConflict(room_id, check_in_date, check_out_date);
+
+    if (conflicts.length > 0) {
+        throw new Error("Bu tarihler arasında bu oda zaten rezerve edilmiş!");
+    }
+
     await reservationData.createReservation(user_id, room_id, check_in_date, check_out_date);
     await reservationData.updateRoomStatus(room_id, 'occupied');
 };

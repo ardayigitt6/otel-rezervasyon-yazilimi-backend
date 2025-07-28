@@ -1,4 +1,5 @@
 const reservationService = require('../services/reservationService');
+const reservationData = require('../data-access/reservationDataAccess');
 
 exports.createReservation = async (req, res) => {
     const { user_id, room_id, check_in_date, check_out_date } = req.body;
@@ -47,5 +48,23 @@ exports.deleteReservation = async (req, res) => {
         res.json({ message: 'Rezervasyon silindi.' });
     } catch (err) {
         res.status(500).json({ error: err.message });
+    }
+};
+
+exports.checkOutReservation = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const [[reservation]] = await reservationData.getRoomIdByReservationId(id);
+
+        if (!reservation) {
+            return res.status(404).json({ error: 'Rezervasyon bulunamadı!' });
+        }
+
+        await reservationData.updateRoomStatus(reservation.room_id, 'available');
+
+        res.json({ message: 'Check-out işlemi başarıyla tamamlandı. Oda artık available.' });
+    } catch (err) {
+        res.status(500).json({ error: 'Check-out işlemi başarısız.', details: err.message });
     }
 };

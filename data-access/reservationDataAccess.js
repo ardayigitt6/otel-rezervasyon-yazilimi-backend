@@ -57,3 +57,13 @@ exports.updateRoomStatus = (roomId, status) => {
     `;
     return db.promise().execute(sql, [status, roomId]);
 };
+
+exports.checkReservationConflict = (roomId, checkIn, checkOut) => {
+    const sql = `
+    SELECT * FROM reservations 
+    WHERE room_id = ?
+    AND check_out_date > ? 
+    AND check_in_date < ?
+    `;
+    return db.promise().execute(sql, [roomId, checkIn, checkOut]);
+};
