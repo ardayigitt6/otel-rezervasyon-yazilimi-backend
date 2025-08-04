@@ -7,6 +7,7 @@ exports.updateRoom = (id, roomData) => roomDataAccess.updateRoom(id, roomData);
 exports.deleteRoom = (id) => roomDataAccess.deleteRoom(id);
 
 exports.getAvailableRooms = async (checkInDate, checkOutDate) => {
-    return await roomDataAccess.getAvailableRooms(checkInDate, checkOutDate);
+    const [rows] = await roomDataAccess.getAvailableRooms(checkInDate, checkOutDate);
+    return rows;
 };
 

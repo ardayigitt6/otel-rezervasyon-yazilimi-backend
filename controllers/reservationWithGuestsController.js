@@ -10,7 +10,8 @@ exports.createReservationWithGuests = async (req, res) => {
 
     try {
         const reservationId = await reservationService.createReservation(user_id, room_id, check_in_date, check_out_date);
-
+        console.log("guest:",guests);
+        console.log("reservationId:",reservationId);
         for (const guest of guests) {
             await guestService.createGuest({
                 reservation_id: reservationId,

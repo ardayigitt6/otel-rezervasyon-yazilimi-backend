@@ -8,7 +8,10 @@ exports.createReservation = async (user_id, room_id, check_in_date, check_out_da
     }
 
     await reservationData.createReservation(user_id, room_id, check_in_date, check_out_date);
+    const [reservation] = await reservationData.getReservationByUserAndRoomId(user_id, room_id, check_in_date, check_out_date);
     await reservationData.updateRoomStatus(room_id, 'occupied');
+
+    return reservation[0].id;
 };
 
 exports.getAllReservations = async () => {

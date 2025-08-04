@@ -53,13 +53,15 @@ exports.getAvailableRooms = async (req, res) => {
     const { check_in_date, check_out_date } = req.query;
 
     if (!check_in_date || !check_out_date) {
+
         return res.status(400).json({ error: 'check_in_date ve check_out_date zorunludur.' });
     }
 
     try {
-        const [rooms] = await roomService.getAvailableRooms(check_in_date, check_out_date);
+        const rooms = await roomService.getAvailableRooms(check_in_date, check_out_date);
 
-        if (rooms.length === 0) {
+
+        if (!rooms || rooms.length === 0) {
             return res.status(404).json({ error: 'Oda bulunmadı!' });
         }
 

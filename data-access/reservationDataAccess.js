@@ -28,6 +28,18 @@ exports.getReservationsByUser = (userId) => {
     return db.promise().execute(sql, [userId]);
 };
 
+exports.getReservationByUserAndRoomId = (user_id,room_id,check_in_date,check_out_date) => {
+    const sql = `
+    SELECT * 
+    FROM reservations r
+    WHERE r.user_id=?
+    AND r.room_id=?
+    AND r.check_in_date=?
+    AND r.check_out_date=?
+    `;
+    return db.promise().execute(sql, [user_id,room_id,check_in_date,check_out_date]);
+};
+
 exports.updateReservation = (id, check_in_date, check_out_date, status) => {
     const sql = `
     UPDATE reservations 

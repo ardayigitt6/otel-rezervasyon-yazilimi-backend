@@ -35,8 +35,8 @@ app.delete('/users/:id', userController.deleteUser);
 app.get('/stats', authMiddleware, checkRole('employee'), statsController.getStats);
 
 app.get('/rooms', roomController.getAllRooms);
-app.get('/rooms/:id', roomController.getRoomById);
 app.get('/rooms/available', authMiddleware, roomController.getAvailableRooms);
+app.get('/rooms/:id', roomController.getRoomById);
 app.put('/rooms/:id', authMiddleware, checkRole('employee'), roomController.updateRoom);
 app.delete('/rooms/:id', authMiddleware, checkRole('employee'), roomController.deleteRoom);
 app.post('/rooms', authMiddleware, checkRole('employee'), roomController.createRoom);
